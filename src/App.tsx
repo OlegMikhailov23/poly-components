@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Text } from './components/Text';
+
+const Emphasis = ({children} : {children: React.ReactText}) => {
+  return <em style={{backgroundColor: 'yellow', color: 'black', fontSize: '5rem'}}>{children}</em>
+}
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Text>This is a text node with no as</Text>
+      <Text as={'h1'} color={'green'} style={{backgroundColor: '#000'}}>Hello World</Text>
+      <Text as={'h2'}>This is a h2 text</Text>
+      <Text as={'a'} href={'http://google.com'} target="_blank">This is a anchor text</Text>
+      <Text>This is a text node with no as</Text>
+      <br/>
+
+      <Text as={Emphasis}>This is Emphasis</Text>
     </div>
   );
 }
