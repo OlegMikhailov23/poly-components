@@ -1,8 +1,7 @@
 import React from 'react';
+import { Rainbow } from '../types/colors';
 
-type Rainbow = 'red' | 'green' | 'yellow' | 'blue' | 'orange' | 'indigo' | 'violet';
-
-type AsProp<C extends React.ElementType = 'span'> = {
+type AsProp<C extends React.ElementType> = {
   as?: C
 }
 
@@ -14,11 +13,15 @@ type TextProps = {
   color?: Rainbow | 'black';  
 }
 
-type Props<C extends React.ElementType, P> = PolymorphicComponentProps<C, P>
-
 type PolymprphicRef<C extends React.ElementType> = React.ComponentPropsWithRef<C>['ref'];
 
-export const Text = React.forwardRef(<C extends React.ElementType = 'span' >({ 
+type Props<C extends React.ElementType, P> = PolymorphicComponentProps<C, P>
+
+type PolymorphicComponentPropsWithRef<C extends React.ElementType, P> = PolymorphicComponentProps<C, P> & {ref?: PolymprphicRef<C>};
+
+type TextComponent = <C extends React.ElementType>(props: PolymorphicComponentPropsWithRef<C, TextProps>) => React.ReactElement | null
+
+export const Text: TextComponent = React.forwardRef(<C extends React.ElementType = 'span' >({ 
   as, 
   color,
   children,
@@ -29,5 +32,5 @@ export const Text = React.forwardRef(<C extends React.ElementType = 'span' >({
 
   const internalStyles = color ? {style: {...style, color}} : {}
 
-  return <Component { ...props } { ...internalStyles }>{children}</Component>
+  return <Component {...props} {...internalStyles} ref={ref}>{children}</Component>
 })
